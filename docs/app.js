@@ -1,4 +1,4 @@
-// Page de Chut! : liens vers la dernière version, système mis en avant, démo avant/après.
+// Page de CHUT !!! : liens vers la dernière version, système mis en avant, démo avant/après.
 (function () {
   'use strict';
 
@@ -248,7 +248,7 @@
     draw();
   });
 
-  /* Forme d'onde : les barres du bruit s'affaissent quand on passe à « Avec Chut! ». */
+  /* Forme d'onde : les barres du bruit s'affaissent quand on passe à « Avec CHUT !!! ». */
 
   let peaks = null;
   let peaksFor = 0;

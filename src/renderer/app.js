@@ -280,7 +280,7 @@ async function loadChannels(channels, name) {
 
 async function runDenoise() {
   if (!state.engineAvailable) {
-    setStatus("Le moteur de débruitage est introuvable. Réinstallez Chut! depuis la page des versions.", 'error');
+    setStatus("Le moteur de débruitage est introuvable. Réinstallez CHUT !!! depuis la page des versions.", 'error');
     return;
   }
   state.busy = true;
