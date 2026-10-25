@@ -1,0 +1,45 @@
+'use strict';
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const dsp = require('../src/shared/dsp');
+
+test('intensité → gain du signal d’origine', () => {
+  assert.equal(dsp.intensityToDryGain(0), 1);
+  assert.equal(dsp.intensityToDryGain(100), 0);
+  assert.equal(dsp.intensityToDryGain(150), 0);
+  assert.equal(dsp.intensityToDryGain(-5), 1);
+  assert.ok(Math.abs(dsp.intensityToDb(50) - 30) < 1e-9);
+  let prev = 2;
+  for (let i = 0; i <= 100; i++) {
+    const g = dsp.intensityToDryGain(i);
+    assert.ok(g < prev, `décroissant à ${i}`);
+    prev = g;
+  }
+});
+
+test('mélange avant/après', () => {
+  const orig = [Float32Array.from([1, 1, 1])];
+  const clean = [Float32Array.from([0, 0, 0])];
+  assert.deepEqual([...dsp.mixChannels(orig, clean, 0)[0]], [1, 1, 1]);
+  assert.deepEqual([...dsp.mixChannels(orig, clean, 100)[0]], [0, 0, 0]);
+  const half = dsp.mixChannels(orig, clean, 50)[0][0];
+  assert.ok(Math.abs(half - Math.pow(10, -30 / 20)) < 1e-6);
+});
+
+test('fitLength tronque ou complète', () => {
+  assert.deepEqual([...dsp.fitLength(Float32Array.from([1, 2, 3]), 2)], [1, 2]);
+  assert.deepEqual([...dsp.fitLength(Float32Array.from([1]), 3)], [1, 0, 0]);
+});
+
+test('waveformPeaks donne min/max par colonne', () => {
+  const p = dsp.waveformPeaks(Float32Array.from([0.5, -0.25, 1, -1]), 2);
+  assert.deepEqual([...p], [-0.25, 0.5, -1, 1]);
+});
+
+test('exemple synthétique déterministe, bruit seul pendant 1 s', () => {
+  const a = dsp.syntheticNoisyVoice({ seconds: 2 });
+  const b = dsp.syntheticNoisyVoice({ seconds: 2 });
+  assert.deepEqual(a.noisy.slice(0, 50), b.noisy.slice(0, 50));
+  assert.equal(dsp.rmsDb(a.voice, 0, a.voiceStart), -Infinity);
+  assert.ok(dsp.rmsDb(a.voice, a.voiceStart) > -40);
+});

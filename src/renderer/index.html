@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chut!</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <img class="logo" src="icon.svg" alt="" width="44" height="44" />
+      <h1>Chut!</h1>
+      <p class="tagline">Enlève le souffle, garde la voix. Tout reste sur votre ordinateur.</p>
+    </header>
+
+    <main>
+      <section id="drop" class="stage" tabindex="0" aria-label="Zone de dépôt du fichier audio">
+        <div class="empty" id="empty">
+          <p class="empty-title">Déposez un fichier audio ici</p>
+          <p class="empty-sub">WAV, MP3, FLAC, OGG ou M4A</p>
+          <div class="empty-actions">
+            <button type="button" id="pick" class="btn primary">Choisir un fichier</button>
+            <button type="button" id="demo" class="btn ghost">Essayer avec un exemple</button>
+          </div>
+          <input type="file" id="file" accept="audio/*,.wav,.mp3,.flac,.ogg,.m4a,.aac,.opus" hidden />
+        </div>
+        <div class="wave" id="wave" hidden>
+          <canvas id="canvas" aria-label="Forme d'onde : cliquez pour vous déplacer"></canvas>
+          <div class="legend">
+            <span class="key noisy">Bruit retiré</span>
+            <span class="key clean">Ce que vous entendez</span>
+            <span class="time" id="time">0:00 / 0:00</span>
+          </div>
+        </div>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <section class="controls" id="controls" aria-label="Réglages">
+        <div class="transport">
+          <button type="button" id="play" class="btn round" disabled aria-label="Lecture">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path id="play-icon" d="M8 5v14l11-7z" /></svg>
+          </button>
+          <div class="ab" role="radiogroup" aria-label="Écoute">
+            <button type="button" role="radio" id="before" aria-checked="false" disabled>Avant</button>
+            <button type="button" role="radio" id="after" aria-checked="true" disabled>Après</button>
+          </div>
+        </div>
+
+        <label class="intensity" for="amount">
+          <span class="intensity-label">Intensité <output id="amount-out">80 %</output></span>
+          <input type="range" id="amount" min="0" max="100" step="1" value="80" disabled />
+          <span class="intensity-scale"><span>Léger</span><span>Silence total</span></span>
+        </label>
+
+        <div class="files">
+          <button type="button" id="export" class="btn primary" disabled>Exporter en WAV</button>
+          <button type="button" id="other" class="btn ghost" disabled>Autre fichier</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      Espace pour lire ou mettre en pause, B pour comparer avant et après. Débruitage DeepFilterNet, sans connexion.
+    </footer>
+
+    <script src="../shared/wav.js"></script>
+    <script src="../shared/dsp.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
