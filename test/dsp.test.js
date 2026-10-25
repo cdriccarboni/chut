@@ -43,3 +43,13 @@ test('exemple synthétique déterministe, bruit seul pendant 1 s', () => {
   assert.equal(dsp.rmsDb(a.voice, 0, a.voiceStart), -Infinity);
   assert.ok(dsp.rmsDb(a.voice, a.voiceStart) > -40);
 });
+
+test('normalisation de pic -1 dB, limite +12 dB, sans écrêtage', () => {
+  const x = [Float32Array.from([0.1, -0.2, 0.05])];
+  const out = dsp.normalizePeak(x);
+  assert.ok(Math.abs(out[0][1]) < 0.8); // gain limité à +12 dB
+  assert.ok(Math.abs(x[0][1] + 0.2) < 1e-6); // source intacte
+  const loud = dsp.normalizePeak([Float32Array.from([1, -0.8])]);
+  assert.ok(Math.abs(loud[0][0] - Math.pow(10, -1/20)) < 1e-6);
+  assert.equal(dsp.normalizePeak([new Float32Array(2)])[0][0], 0);
+});

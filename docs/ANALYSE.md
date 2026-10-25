@@ -22,7 +22,7 @@ On garde l'esprit : une seule fenêtre, un glisser-déposer, tout en local.
 
 Presque : le CLI `deep-filter` fait déjà le débruitage, très bien et vite (environ 0,2 s pour 4 s de son
 sur Apple Silicon). Il lui manque l'écoute avant/après, le réglage d'intensité en direct et l'export
-pour un non-spécialiste. CHUT !!! est donc un habillage léger de ce CLI, sans réécrire le moteur.
+pour un non-spécialiste. Chut !!! est donc un habillage léger de ce CLI, sans réécrire le moteur.
 
 ## Choix techniques
 

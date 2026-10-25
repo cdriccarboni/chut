@@ -36,6 +36,18 @@
     });
   }
 
+  /** Normalisation de pic prudente, sans écrêtage, plafonnée à +12 dB. */
+  function normalizePeak(channels, targetDb = -1, maxBoostDb = 12) {
+    let peak = 0;
+    for (const ch of channels) for (const sample of ch) {
+      if (Number.isFinite(sample)) peak = Math.max(peak, Math.abs(sample));
+    }
+    if (peak <= 0) return channels.map(ch => new Float32Array(ch));
+    const target = Math.pow(10, targetDb / 20);
+    const gain = Math.min(target / peak, Math.pow(10, maxBoostDb / 20));
+    return channels.map(ch => Float32Array.from(ch, sample => Number.isFinite(sample) ? Math.max(-1, Math.min(1, sample * gain)) : 0));
+  }
+
   /** Ajuste la longueur (troncature ou zéros) pour réaligner avec l'original. */
   function fitLength(samples, length) {
     if (samples.length === length) return samples;
@@ -134,6 +146,7 @@
     intensityToDb,
     intensityToDryGain,
     mixChannels,
+    normalizePeak,
     fitLength,
     rmsDb,
     waveformPeaks,

@@ -280,7 +280,7 @@ async function loadChannels(channels, name) {
 
 async function runDenoise() {
   if (!state.engineAvailable) {
-    setStatus("Le moteur de débruitage est introuvable. Réinstallez CHUT !!! depuis la page des versions.", 'error');
+    setStatus("Le moteur de débruitage est introuvable. Réinstallez Chut !!! depuis la page des versions.", 'error');
     return;
   }
   state.busy = true;
@@ -322,7 +322,8 @@ async function openFile(file) {
 async function exportWav() {
   if (!state.denoised) return;
   const mixed = ChutDsp.mixChannels(state.original, state.denoised, state.intensity);
-  const bytes = ChutWav.encodeWav(mixed, RATE, { bitDepth: 24 });
+  const output = document.getElementById('normalize').checked ? ChutDsp.normalizePeak(mixed) : mixed;
+  const bytes = ChutWav.encodeWav(output, RATE, { bitDepth: 24 });
   const base = state.name.replace(/\.[^.]+$/, '') || 'audio';
   const saved = await window.chut.saveWav(bytes, `${base} (chut).wav`);
   if (saved) setStatus(`Exporté : « ${saved.split(/[\\/]/).pop()} ».`);

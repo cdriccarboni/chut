@@ -1,7 +1,7 @@
 {
   "name": "chut",
-  "productName": "CHUT !!!",
-  "version": "0.1.1",
+  "productName": "Chut !!!",
+  "version": "0.1.2",
   "description": "Débruiteur audio gratuit et 100 % local (DeepFilterNet), pour Mac, Windows et Linux.",
   "main": "src/main/main.js",
   "license": "MIT",
@@ -25,7 +25,7 @@
   },
   "build": {
     "appId": "io.github.cdriccarboni.chut",
-    "productName": "CHUT !!!",
+    "productName": "Chut !!!",
     "artifactName": "Chut-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "dist",
@@ -57,7 +57,7 @@
       "hardenedRuntime": false
     },
     "dmg": {
-      "title": "CHUT !!! ${version}"
+      "title": "Chut !!! ${version}"
     },
     "win": {
       "target": [
@@ -86,9 +86,9 @@
       "executableName": "chut",
       "desktop": {
         "entry": {
-          "Name": "CHUT !!!",
+          "Name": "Chut !!!",
           "Comment": "Débruiteur audio local",
-          "StartupWMClass": "CHUT !!!"
+          "StartupWMClass": "Chut !!!"
         }
       }
     }

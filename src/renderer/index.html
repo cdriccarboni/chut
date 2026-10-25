@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self' blob:" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CHUT !!!</title>
+    <title>Chut !!!</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header class="top">
       <img class="logo" src="icon.svg" alt="" width="44" height="44" />
-      <h1>CHUT !!!</h1>
+      <h1>Chut !!!</h1>
       <p class="tagline">Enlève le souffle, garde la voix. Tout reste sur votre ordinateur.</p>
     </header>
 
@@ -54,6 +54,7 @@
           <span class="intensity-scale"><span>Léger</span><span>Silence total</span></span>
         </label>
 
+        <label class="normalize"><input id="normalize" type="checkbox" /> Amplifier automatiquement le fichier exporté (pic -1 dB)</label>
         <div class="files">
           <button type="button" id="export" class="btn primary" disabled>Exporter en WAV</button>
           <button type="button" id="other" class="btn ghost" disabled>Autre fichier</button>

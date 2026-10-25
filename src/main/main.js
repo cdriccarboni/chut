@@ -5,7 +5,7 @@ const path = require('path');
 const { app, BrowserWindow, dialog, ipcMain, shell } = require('electron');
 const engine = require('./engine');
 
-const APP_NAME = 'CHUT !!!';
+const APP_NAME = 'Chut !!!';
 const APP_ROOT = path.join(__dirname, '..', '..');
 const SMOKE_DIR = process.env.CHUT_SMOKE || null;
 

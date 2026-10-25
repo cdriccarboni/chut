@@ -1,18 +1,18 @@
-<p align="center"><img src="build/icon.png" width="128" height="128" alt="Icône de CHUT !!! : des ondes avant et après suppression du bruit"></p>
+<p align="center"><img src="build/icon.png" width="128" height="128" alt="Icône de Chut !!! : des ondes avant et après suppression du bruit"></p>
 
-# CHUT !!!
+# Chut !!!
 
 **[Page de téléchargement](https://cdriccarboni.github.io/chut/)** : macOS, Windows et Linux, avec une démo avant/après à écouter.
 
-CHUT !!! enlève le souffle, le ventilo et le bruit de fond de vos enregistrements de voix. C'est gratuit, ça marche sur Mac, Windows et Linux, et rien ne quitte votre ordinateur : pas de compte, pas d'envoi en ligne.
+Chut !!! enlève le souffle, le ventilo et le bruit de fond de vos enregistrements de voix. C'est gratuit, ça marche sur Mac, Windows et Linux, et rien ne quitte votre ordinateur : pas de compte, pas d'envoi en ligne.
 
 Sous le capot, c'est [DeepFilterNet](https://github.com/Rikorose/DeepFilterNet), un débruiteur libre par réseau de neurones, très efficace sur la voix.
 
-![Capture de CHUT !!!](docs/capture.png)
+![Capture de Chut !!!](docs/capture.png)
 
 ## Télécharger
 
-Le plus simple : la [page de CHUT !!!](https://cdriccarboni.github.io/chut/), qui propose le bon fichier pour votre système. Sinon, tout est sur la [page des versions](https://github.com/cdriccarboni/chut/releases) :
+Le plus simple : la [page de Chut !!!](https://cdriccarboni.github.io/chut/), qui propose le bon fichier pour votre système. Sinon, tout est sur la [page des versions](https://github.com/cdriccarboni/chut/releases) :
 
 | Système | Fichier |
 |---|---|
@@ -27,7 +27,7 @@ Le plus simple : la [page de CHUT !!!](https://cdriccarboni.github.io/chut/), qu
 
 L'appli n'est pas signée par un certificat payant, donc le système va se méfier un peu la première fois.
 
-- **macOS** : faites un clic droit sur CHUT !!! dans Applications, puis **Ouvrir**, et confirmez. Si macOS refuse quand même (macOS 15 et plus), allez dans Réglages Système > Confidentialité et sécurité, puis cliquez sur **Ouvrir quand même** en bas de la page.
+- **macOS** : faites un clic droit sur Chut !!! dans Applications, puis **Ouvrir**, et confirmez. Si macOS refuse quand même (macOS 15 et plus), allez dans Réglages Système > Confidentialité et sécurité, puis cliquez sur **Ouvrir quand même** en bas de la page.
 - **Windows** : si SmartScreen affiche « Windows a protégé votre ordinateur », cliquez sur **Informations complémentaires** puis **Exécuter quand même**.
 - **Linux** : rendez l'AppImage exécutable (`chmod +x Chut-*.AppImage`). Si elle ne démarre pas sur Ubuntu 24.04 ou plus, préférez le paquet `.deb`.
 
@@ -62,4 +62,4 @@ Le choix du moteur et la comparaison avec les autres briques libres sont expliqu
 
 ## Licences
 
-CHUT !!! est sous licence [MIT](LICENSE). DeepFilterNet est sous licence MIT ou Apache-2.0 ; le détail des composants tiers est dans [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+Chut !!! est sous licence [MIT](LICENSE). DeepFilterNet est sous licence MIT ou Apache-2.0 ; le détail des composants tiers est dans [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
