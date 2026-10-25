@@ -48,6 +48,23 @@
     return channels.map(ch => Float32Array.from(ch, sample => Number.isFinite(sample) ? Math.max(-1, Math.min(1, sample * gain)) : 0));
   }
 
+  // La couche résiduelle est la différence entre la prise et le résultat DeepFilterNet.
+  function splitStems(original, denoised) {
+    const voice = original.map((c,i) => fitLength(denoised[i] || denoised[0], c.length));
+    const residual = original.map((c,i) => Float32Array.from(c,(v,n)=>v-voice[i][n]));
+    return {voice,residual};
+  }
+  function mixStems(voice,residual,voiceGain=1,residualGain=1) {
+    return voice.map((c,i)=>Float32Array.from(c,(v,n)=>v*voiceGain+(residual[i]||residual[0])[n]*residualGain));
+  }
+  function notchChannels(channels,f=50,rate=48000,q=25) {
+    const w=2*Math.PI*f/rate, alpha=Math.sin(w)/(2*q), norm=1+alpha;
+    const b0=1/norm,b1=-2*Math.cos(w)/norm,b2=b0,a1=b1,a2=(1-alpha)/norm;
+    return channels.map(ch=>{const out=new Float32Array(ch.length);let x1=0,x2=0,y1=0,y2=0;
+      for(let i=0;i<ch.length;i++){const x=ch[i],y=b0*x+b1*x1+b2*x2-a1*y1-a2*y2;
+        out[i]=y;x2=x1;x1=x;y2=y1;y1=y;}return out;});
+  }
+
   /** Ajuste la longueur (troncature ou zéros) pour réaligner avec l'original. */
   function fitLength(samples, length) {
     if (samples.length === length) return samples;
@@ -146,6 +163,9 @@
     intensityToDb,
     intensityToDryGain,
     mixChannels,
+    splitStems,
+    mixStems,
+    notchChannels,
     normalizePeak,
     fitLength,
     rmsDb,

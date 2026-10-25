@@ -33,6 +33,7 @@ const state = {
   mode: 'after',
   busy: false,
   engineAvailable: false,
+  studio: false,
 };
 
 // ---------- Lecture : deux sources synchronisées, on bascule les gains (A/B sans coupure)
@@ -80,7 +81,7 @@ function applyGains(immediate) {
   let orig = 1;
   let clean = 0;
   if (state.mode === 'after' && state.denoised) {
-    const g = ChutDsp.intensityToDryGain(state.intensity);
+    const g = state.studio ? 0 : ChutDsp.intensityToDryGain(state.intensity);
     orig = g;
     clean = 1 - g;
   }
@@ -228,13 +229,30 @@ function renderPlayState() {
   ui.play.setAttribute('aria-label', player.playing ? 'Pause' : 'Lecture');
 }
 
+function studioMix() {
+  const stems = ChutDsp.splitStems(state.original,state.denoised);
+  let out = ChutDsp.mixStems(stems.voice,stems.residual,Number($('stem-voice').value)/100,Number($('stem-residual').value)/100);
+  if ($('notch50').checked) out = ChutDsp.notchChannels(out);
+  return out;
+}
+function updateStudio() {
+  if (!state.original || !state.denoised || !state.studio) return;
+  const wasPlaying=player.playing;
+  if(wasPlaying) pause();
+  player.bufClean=toAudioBuffer(studioMix());
+  $('stem-voice-label').textContent=$('stem-voice').value+' %';
+  $('stem-residual-label').textContent=$('stem-residual').value+' %';
+  if(wasPlaying) play();
+  draw();
+}
 function renderControls() {
   const loaded = !!state.original;
   const ready = loaded && !!state.denoised && !state.busy;
   ui.play.disabled = !loaded || state.busy;
   ui.before.disabled = !ready;
   ui.after.disabled = !ready;
-  ui.amount.disabled = !ready;
+  ui.amount.disabled = !ready || state.studio;
+  for(const id of ['stem-voice','stem-residual','notch50']) $(id).disabled=!ready;
   ui.exportBtn.disabled = !ready;
   ui.other.disabled = !loaded || state.busy;
   ui.pick.disabled = state.busy;
@@ -269,6 +287,7 @@ async function loadChannels(channels, name) {
   state.name = name;
   state.original = channels;
   state.denoised = null;
+  state.studio = false;
   state.mode = 'after';
   player.bufOrig = toAudioBuffer(channels);
   player.bufClean = null;
@@ -290,7 +309,8 @@ async function runDenoise() {
   try {
     const result = await window.chut.denoise({ sampleRate: RATE, channels: state.original });
     state.denoised = result.map((c) => (c instanceof Float32Array ? c : new Float32Array(c)));
-    player.bufClean = toAudioBuffer(state.denoised);
+    state.studio = true;
+    player.bufClean = toAudioBuffer(studioMix());
     computePeaks();
     const secs = ((performance.now() - started) / 1000).toFixed(1);
     setStatus(`« ${state.name} » débruité en ${secs} s. Comparez avec B, puis exportez.`);
@@ -321,7 +341,7 @@ async function openFile(file) {
 
 async function exportWav() {
   if (!state.denoised) return;
-  const mixed = ChutDsp.mixChannels(state.original, state.denoised, state.intensity);
+  const mixed = state.studio ? studioMix() : ChutDsp.mixChannels(state.original, state.denoised, state.intensity);
   const output = document.getElementById('normalize').checked ? ChutDsp.normalizePeak(mixed) : mixed;
   const bytes = ChutWav.encodeWav(output, RATE, { bitDepth: 24 });
   const base = state.name.replace(/\.[^.]+$/, '') || 'audio';
@@ -351,6 +371,7 @@ ui.amount.addEventListener('input', () => {
   renderControls();
   draw();
 });
+for(const id of ['stem-voice','stem-residual','notch50']) $(id).addEventListener('input', updateStudio);
 ui.exportBtn.addEventListener('click', exportWav);
 ui.canvas.addEventListener('click', (e) => {
   const rect = ui.canvas.getBoundingClientRect();

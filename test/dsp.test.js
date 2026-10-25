@@ -53,3 +53,15 @@ test('normalisation de pic -1 dB, limite +12 dB, sans écrêtage', () => {
   assert.ok(Math.abs(loud[0][0] - Math.pow(10, -1/20)) < 1e-6);
   assert.equal(dsp.normalizePeak([new Float32Array(2)])[0][0], 0);
 });
+
+test('v2: reconstitution original depuis les couches',()=>{
+ const source=[Float32Array.from([0.2,0.7,-0.4])],clean=[Float32Array.from([0.1,0.5,-0.1])];
+ const {voice,residual}=dsp.splitStems(source,clean),out=dsp.mixStems(voice,residual);
+ for(let i=0;i<3;i++) assert.ok(Math.abs(source[0][i]-out[0][i])<1e-6);
+});
+test('v2: notch 50 Hz atténue le ronflement',()=>{
+ const n=48000,x=Float32Array.from({length:n},(_,i)=>Math.sin(2*Math.PI*50*i/n));
+ const y=dsp.notchChannels([x])[0];
+ const rms=a=>Math.sqrt(a.slice(24000).reduce((sum,v)=>sum+v*v,0)/24000);
+ assert.ok(rms(y)<rms(x)*0.25);
+});
