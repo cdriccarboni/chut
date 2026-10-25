@@ -21,7 +21,7 @@ test('resolveEngine préfère la copie packagée', () => {
     appRoot: '/src',
     platform: 'linux',
     arch: 'x64',
-    exists: (p) => p.startsWith('/app') || p.startsWith('/src'),
+    exists: (p) => p.startsWith(path.join('/app')) || p.startsWith(path.join('/src')),
   });
   assert.equal(found, path.join('/app/Resources', 'engine', 'deep-filter'));
   assert.equal(engine.resolveEngine({ appRoot: '/x', exists: () => false }), null);
