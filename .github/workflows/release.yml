@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Créer la pré-version si besoin
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create "$TAG" -R "$GITHUB_REPOSITORY" --prerelease --verify-tag --title "Chut! ${TAG#v}" --notes "Débruiteur audio local. Mac : clic droit puis Ouvrir au premier lancement (voir README)."
+
+  build:
+    needs: release
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            engines: mac-arm64 mac-x64
+            dist: dist:mac
+            files: dist/*.dmg dist/*.zip
+          - os: windows-latest
+            engines: win-x64
+            dist: dist:win
+            files: dist/*.exe
+          - os: ubuntu-latest
+            engines: linux-x64
+            dist: dist:linux
+            files: dist/*.AppImage dist/*.deb
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/fetch-engine.mjs ${{ matrix.engines }}
+      - run: npm test
+      - name: Construire
+        run: npm run ${{ matrix.dist }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Joindre à la version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.ref_name }}" ${{ matrix.files }} --clobber

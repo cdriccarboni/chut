@@ -80,8 +80,16 @@
       ],
       "icon": "build/icon.png",
       "category": "Audio",
-      "maintainer": "Cédric Carboni <noreply@github.com>",
-      "synopsis": "Débruiteur audio local"
+      "maintainer": "Cédric Carboni <9994854+cdriccarboni@users.noreply.github.com>",
+      "synopsis": "Débruiteur audio local",
+      "executableName": "chut",
+      "desktop": {
+        "entry": {
+          "Name": "Chut!",
+          "Comment": "Débruiteur audio local",
+          "StartupWMClass": "Chut!"
+        }
+      }
     }
   },
   "devDependencies": {
