@@ -65,6 +65,16 @@
         out[i]=y;x2=x1;x1=x;y2=y1;y1=y;}return out;});
   }
 
+  // Trois bandes complémentaires : basse ambiance / corps / aigus (pas des objets sonores).
+  function splitFrequencyBands(channels,rate=48000) {
+    const filter=(ch,frequency)=>{const a=1-Math.exp(-2*Math.PI*frequency/rate);const out=new Float32Array(ch.length);let y=0;for(let i=0;i<ch.length;i++){y+=a*(ch[i]-y);out[i]=y;}return out;};
+    return channels.map(ch=>{const low=filter(ch,120),belowMid=filter(ch,1800),mid=new Float32Array(ch.length),high=new Float32Array(ch.length);
+      for(let i=0;i<ch.length;i++){mid[i]=belowMid[i]-low[i];high[i]=ch[i]-belowMid[i];}return {low,mid,high};});
+  }
+  function mixFrequencyBands(channels,lowGain=1,midGain=1,highGain=1,rate=48000) {
+    return splitFrequencyBands(channels,rate).map(({low,mid,high})=>Float32Array.from(low,(v,i)=>v*lowGain+mid[i]*midGain+high[i]*highGain));
+  }
+
   /** Ajuste la longueur (troncature ou zéros) pour réaligner avec l'original. */
   function fitLength(samples, length) {
     if (samples.length === length) return samples;
@@ -166,6 +176,8 @@
     splitStems,
     mixStems,
     notchChannels,
+    splitFrequencyBands,
+    mixFrequencyBands,
     normalizePeak,
     fitLength,
     rmsDb,

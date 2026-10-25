@@ -232,6 +232,7 @@ function renderPlayState() {
 function studioMix() {
   const stems = ChutDsp.splitStems(state.original,state.denoised);
   let out = ChutDsp.mixStems(stems.voice,stems.residual,Number($('stem-voice').value)/100,Number($('stem-residual').value)/100);
+  out = ChutDsp.mixFrequencyBands(out,Number($('band-low').value)/100,Number($('band-mid').value)/100,Number($('band-high').value)/100);
   if ($('notch50').checked) out = ChutDsp.notchChannels(out);
   return out;
 }
@@ -242,6 +243,7 @@ function updateStudio() {
   player.bufClean=toAudioBuffer(studioMix());
   $('stem-voice-label').textContent=$('stem-voice').value+' %';
   $('stem-residual-label').textContent=$('stem-residual').value+' %';
+  for(const b of ['low','mid','high']) $('band-'+b+'-label').textContent=$('band-'+b).value+' %';
   if(wasPlaying) play();
   draw();
 }
@@ -252,7 +254,7 @@ function renderControls() {
   ui.before.disabled = !ready;
   ui.after.disabled = !ready;
   ui.amount.disabled = !ready || state.studio;
-  for(const id of ['stem-voice','stem-residual','notch50']) $(id).disabled=!ready;
+  for(const id of ['stem-voice','stem-residual','band-low','band-mid','band-high','notch50']) $(id).disabled=!ready;
   ui.exportBtn.disabled = !ready;
   ui.other.disabled = !loaded || state.busy;
   ui.pick.disabled = state.busy;
@@ -371,7 +373,7 @@ ui.amount.addEventListener('input', () => {
   renderControls();
   draw();
 });
-for(const id of ['stem-voice','stem-residual','notch50']) $(id).addEventListener('input', updateStudio);
+for(const id of ['stem-voice','stem-residual','band-low','band-mid','band-high','notch50']) $(id).addEventListener('input', updateStudio);
 ui.exportBtn.addEventListener('click', exportWav);
 ui.canvas.addEventListener('click', (e) => {
   const rect = ui.canvas.getBoundingClientRect();

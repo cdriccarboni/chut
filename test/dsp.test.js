@@ -65,3 +65,15 @@ test('v2: notch 50 Hz atténue le ronflement',()=>{
  const rms=a=>Math.sqrt(a.slice(24000).reduce((sum,v)=>sum+v*v,0)/24000);
  assert.ok(rms(y)<rms(x)*0.25);
 });
+
+test('v2: trois plans fréquentiels reconstituent la source lorsque tous à 100%',()=>{
+ const src=[Float32Array.from({length:2000},(_,i)=>.2*Math.sin(i*.03)+.1*Math.sin(i*.5))];
+ const output=dsp.mixFrequencyBands(src,1,1,1);
+ for(let i=0;i<src[0].length;i++) assert.ok(Math.abs(output[0][i]-src[0][i])<1e-6);
+});
+test('v2: grave de 50 Hz dominant dans bande basse',()=>{
+ const src=[Float32Array.from({length:48000},(_,i)=>Math.sin(2*Math.PI*50*i/48000))];
+ const bands=dsp.splitFrequencyBands(src)[0];
+ const rms=x=>Math.sqrt(x.slice(12000).reduce((a,b)=>a+b*b,0)/36000);
+ assert.ok(rms(bands.low)>rms(bands.high)*2);
+});

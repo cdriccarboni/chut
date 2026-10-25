@@ -59,7 +59,11 @@
           <small>Deux couches complémentaires, estimées par DeepFilterNet (pas de séparation instrument par instrument).</small>
           <label>Voix nettoyée <output id="stem-voice-label">100 %</output><input id="stem-voice" type="range" min="0" max="150" value="100" disabled></label>
           <label>Sons retirés / bruitages <output id="stem-residual-label">0 %</output><input id="stem-residual" type="range" min="0" max="150" value="0" disabled></label>
-          <label><input id="notch50" type="checkbox" disabled> Filtrer le ronflement à 50 Hz</label>
+          <div class="band-eq"><strong>Plans fréquentiels</strong>
+          <label>Graves / fond lointain <output id="band-low-label">100 %</output><input id="band-low" type="range" min="0" max="150" value="100" disabled></label>
+          <label>Médiums / matière <output id="band-mid-label">100 %</output><input id="band-mid" type="range" min="0" max="150" value="100" disabled></label>
+          <label>Aigus / détails <output id="band-high-label">100 %</output><input id="band-high" type="range" min="0" max="150" value="100" disabled></label></div>
+          <label><input id="notch50"  type="checkbox" disabled> Filtrer le ronflement à 50 Hz</label>
         </section>
         <label class="normalize"><input id="normalize" type="checkbox" /> Amplifier automatiquement le fichier exporté (pic -1 dB)</label>
         <div class="files">
