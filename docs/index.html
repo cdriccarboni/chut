@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chut! : le débruiteur de voix gratuit et 100 % local</title>
+  <meta name="description" content="Chut! enlève le souffle, le ventilo et le bruit de fond de vos enregistrements de voix. Gratuit, open source, pour Mac, Windows et Linux. Rien ne quitte votre ordinateur.">
+  <meta name="theme-color" content="#1f1630">
+  <meta property="og:title" content="Chut! : le bruit se tait, votre voix reste">
+  <meta property="og:description" content="Débruiteur de voix gratuit, open source et 100 % local, pour Mac, Windows et Linux.">
+  <meta property="og:image" content="https://cdriccarboni.github.io/chut/icon-512.png">
+  <meta property="og:url" content="https://cdriccarboni.github.io/chut/">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-512.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#telecharger">Aller au téléchargement</a>
+
+  <header class="hero">
+    <svg class="hero-icon" viewBox="0 0 1024 1024" role="img" aria-label="Icône de Chut! : un doigt posé sur des lèvres, les ondes sonores s'éteignent">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a52"/><stop offset="1" stop-color="#1f1630"/></linearGradient>
+        <linearGradient id="lip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8fab"/><stop offset="1" stop-color="#e8557a"/></linearGradient>
+        <linearGradient id="finger" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffe2c6"/><stop offset="1" stop-color="#f4bf98"/></linearGradient>
+      </defs>
+      <rect x="64" y="64" width="896" height="896" rx="200" fill="url(#bg)"/>
+      <g class="waves" fill="none" stroke="#8fe3c5" stroke-linecap="round" stroke-width="34">
+        <path class="w-in" d="M190 430 q-40 82 0 164"/>
+        <path class="w-out" d="M128 384 q-64 128 0 256"/>
+        <path class="w-in" d="M834 430 q40 82 0 164"/>
+        <path class="w-out" d="M896 384 q64 128 0 256"/>
+      </g>
+      <path d="M262 548 C300 470 392 438 452 470 C482 452 542 452 572 470 C632 438 724 470 762 548 C700 640 600 690 512 690 C424 690 324 640 262 548 Z" fill="url(#lip)"/>
+      <path d="M262 548 C380 580 644 580 762 548" fill="none" stroke="#a8324f" stroke-width="18" stroke-linecap="round"/>
+      <g class="finger">
+        <rect x="452" y="230" width="120" height="560" rx="60" fill="url(#finger)" stroke="#c98a66" stroke-width="10"/>
+        <path d="M478 290 q34 -26 68 0" fill="none" stroke="#e7a985" stroke-width="12" stroke-linecap="round"/>
+        <path d="M478 470 h68" stroke="#d99a76" stroke-width="10" stroke-linecap="round"/>
+      </g>
+      <path d="M300 330 q50 -40 100 0" fill="none" stroke="#f3ecf7" stroke-width="26" stroke-linecap="round"/>
+      <path d="M624 330 q50 -40 100 0" fill="none" stroke="#f3ecf7" stroke-width="26" stroke-linecap="round"/>
+    </svg>
+
+    <div class="hero-text">
+      <h1>Chut!</h1>
+      <p class="slogan">Le bruit se tait. Votre voix reste.</p>
+      <p class="lede">Chut! enlève le souffle, le ventilo et le bruit de fond de vos enregistrements de voix. C'est gratuit, open source, et rien ne quitte votre ordinateur.</p>
+      <div class="hero-cta">
+        <a class="btn btn-main" id="cta-main" href="#telecharger">Télécharger Chut!</a>
+        <p class="cta-note" id="cta-note">Pour Mac, Windows et Linux.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="demo" aria-labelledby="demo-titre">
+      <h2 id="demo-titre">Écoutez la différence</h2>
+      <p class="section-lede">Une voix de synthèse noyée dans un souffle de ventilation, puis la même après Chut!. Basculez pendant la lecture : le son ne s'interrompt pas.</p>
+
+      <div class="player" id="player" data-mode="avant">
+        <canvas class="wave" id="wave" aria-hidden="true"></canvas>
+        <div class="player-controls">
+          <button class="play" id="play" type="button" aria-label="Lire" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          </button>
+          <div class="switch" role="group" aria-label="Version écoutée">
+            <button type="button" id="btn-avant" aria-pressed="true">Avec le bruit</button>
+            <button type="button" id="btn-apres" aria-pressed="false">Avec Chut!</button>
+          </div>
+          <p class="meter" id="meter" aria-live="polite">Bruit de fond : −32 dB</p>
+        </div>
+        <noscript>
+          <p>Avec le bruit : <audio controls src="demo/avant.mp3"></audio></p>
+          <p>Avec Chut! : <audio controls src="demo/apres.mp3"></audio></p>
+        </noscript>
+      </div>
+      <p class="fineprint">Son de test généré par ordinateur et traité par le vrai moteur de Chut!. Aucun enregistrement de personne réelle.</p>
+    </section>
+
+    <section class="get" id="telecharger" aria-labelledby="dl-titre">
+      <h2 id="dl-titre">Télécharger</h2>
+      <p class="section-lede">Version <span id="version">0.1.0</span>. Votre système est mis en avant, les autres restent là.</p>
+
+      <div class="os-grid">
+        <article class="os" data-os="mac">
+          <h3>macOS</h3>
+          <p>Mac Apple Silicon (M1 et suivants) ou Intel. macOS 12 ou plus récent.</p>
+          <a class="btn" data-asset="mac-arm64.dmg" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-mac-arm64.dmg">Télécharger (Apple Silicon)</a>
+          <a class="alt" data-asset="mac-x64.dmg" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-mac-x64.dmg">Version pour Mac Intel</a>
+        </article>
+        <article class="os" data-os="windows">
+          <h3>Windows</h3>
+          <p>Windows 10 ou 11, 64 bits. Installateur classique, ou version à lancer sans installer.</p>
+          <a class="btn" data-asset="win-x64-setup.exe" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-win-x64-setup.exe">Télécharger pour Windows</a>
+          <a class="alt" data-asset="win-x64-portable.exe" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-win-x64-portable.exe">Version sans installation</a>
+        </article>
+        <article class="os" data-os="linux">
+          <h3>Linux</h3>
+          <p>AppImage pour toutes les distributions 64 bits, paquet .deb pour Debian et Ubuntu.</p>
+          <a class="btn" data-asset="linux-x86_64.AppImage" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-linux-x86_64.AppImage">Télécharger l'AppImage</a>
+          <a class="alt" data-asset="linux-amd64.deb" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-linux-amd64.deb">Paquet .deb</a>
+        </article>
+      </div>
+
+      <details class="first-run">
+        <summary>Votre système se méfie au premier lancement ? C'est normal.</summary>
+        <p>Chut! n'est pas signé avec un certificat payant, alors le système demande une confirmation la première fois.</p>
+        <ul>
+          <li><strong>macOS</strong> : clic droit sur Chut! dans Applications, puis Ouvrir. Sur macOS 15 et plus, si ça ne suffit pas, allez dans Réglages Système, Confidentialité et sécurité, puis Ouvrir quand même.</li>
+          <li><strong>Windows</strong> : si SmartScreen s'affiche, cliquez sur Informations complémentaires, puis Exécuter quand même.</li>
+          <li><strong>Linux</strong> : rendez l'AppImage exécutable avec <code>chmod +x Chut-*.AppImage</code>. Sur Ubuntu 24.04 et plus, préférez le paquet .deb.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="features" aria-labelledby="feat-titre">
+      <h2 id="feat-titre">Ce que fait Chut!</h2>
+      <dl class="feat-list">
+        <div>
+          <dt>Il nettoie la voix</dt>
+          <dd>Souffle, ventilateur, frigo, rumeur de la rue : le réseau de neurones DeepFilterNet garde la parole et efface le reste.</dd>
+        </div>
+        <div>
+          <dt>Vous comparez à l'oreille</dt>
+          <dd>Passez de l'original au résultat pendant la lecture, sans coupure, et voyez la forme d'onde avant et après.</dd>
+        </div>
+        <div>
+          <dt>Vous dosez l'effet</dt>
+          <dd>Un curseur règle l'intensité, pour un résultat naturel plutôt qu'aseptisé.</dd>
+        </div>
+        <div>
+          <dt>Tout reste chez vous</dt>
+          <dd>Aucun compte, aucun envoi en ligne. Le traitement se fait sur votre ordinateur, même sans connexion.</dd>
+        </div>
+      </dl>
+
+      <ul class="promises">
+        <li>100 % local</li>
+        <li>Gratuit</li>
+        <li>Open source</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Chut! est distribué sous <a href="https://github.com/cdriccarboni/chut/blob/main/LICENSE">licence MIT</a>. Le moteur <a href="https://github.com/Rikorose/DeepFilterNet">DeepFilterNet</a> est sous licence MIT ou Apache 2.0.</p>
+    <p><a href="https://github.com/cdriccarboni/chut">Code source sur GitHub</a> · <a href="https://github.com/cdriccarboni/chut/releases">Toutes les versions</a> · <a href="https://github.com/cdriccarboni/chut/issues">Signaler un problème</a></p>
+  </footer>
+</body>
+</html>

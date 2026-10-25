@@ -2,6 +2,8 @@
 
 # Chut!
 
+**[Page de téléchargement](https://cdriccarboni.github.io/chut/)** : macOS, Windows et Linux, avec une démo avant/après à écouter.
+
 Chut! enlève le souffle, le ventilo et le bruit de fond de vos enregistrements de voix. C'est gratuit, ça marche sur Mac, Windows et Linux, et rien ne quitte votre ordinateur : pas de compte, pas d'envoi en ligne.
 
 Sous le capot, c'est [DeepFilterNet](https://github.com/Rikorose/DeepFilterNet), un débruiteur libre par réseau de neurones, très efficace sur la voix.
@@ -10,7 +12,7 @@ Sous le capot, c'est [DeepFilterNet](https://github.com/Rikorose/DeepFilterNet),
 
 ## Télécharger
 
-Tout est sur la [page des versions](https://github.com/cdriccarboni/chut/releases) :
+Le plus simple : la [page de Chut!](https://cdriccarboni.github.io/chut/), qui propose le bon fichier pour votre système. Sinon, tout est sur la [page des versions](https://github.com/cdriccarboni/chut/releases) :
 
 | Système | Fichier |
 |---|---|
