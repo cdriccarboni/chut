@@ -9,8 +9,7 @@
   </head>
   <body>
     <header class="top">
-      <img class="logo" src="icon.svg" alt="" width="44" height="44" />
-      <h1>Chut !!!</h1>
+      <h1 class="brand-title"><img src="../../docs/brand/chut-logo.svg" alt="Chut !!!" width="220" height="51" /></h1>
       <p class="tagline">Enlève le souffle, garde la voix. Tout reste sur votre ordinateur.</p>
     </header>
 
@@ -26,7 +25,7 @@
           <input type="file" id="file" accept="audio/*,.wav,.mp3,.flac,.ogg,.m4a,.aac,.opus" hidden />
         </div>
         <div class="wave" id="wave" hidden>
-          <canvas id="canvas" aria-label="Forme d'onde : cliquez pour vous déplacer"></canvas>
+          <canvas id="canvas" role="slider" tabindex="0" aria-label="Position de lecture" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></canvas>
           <div class="legend">
             <span class="key noisy">Bruit retiré</span>
             <span class="key clean">Ce que vous entendez</span>

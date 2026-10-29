@@ -1,1 +1,51 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1f1630"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="../icon.svg"><title>Chut !!! — Atelier web</title><style>body{background:#1f1630;color:#f3ecf7;font:16px system-ui;max-width:680px;margin:30px auto;padding:0 20px}h1{color:#8fe3c5}section{border:1px solid #594b6a;background:#2b2040;border-radius:18px;padding:20px;display:grid;gap:15px}button,a{background:#8fe3c5;color:#1f1630;border:0;border-radius:8px;padding:12px;text-decoration:none;font-weight:700}button:disabled{opacity:.4}input[type=range]{width:100%}small{color:#cabed5}label{display:block}</style></head><body><p><a href="../">← Chut !!!</a></p><h1>Chut !!! · Atelier web</h1><p>Restauration locale sur téléphone et ordinateur. Aucun fichier n'est envoyé sur un serveur.</p><section><label>Choisir un fichier audio <input id="file" type="file" accept="audio/*"></label><label><input id="notch" type="checkbox" checked> Atténuer un ronflement constant à 50 Hz</label><label>Volume <output id="volumeValue">100 %</output><input id="volume" type="range" min="0" max="200" value="100"></label><button id="process" disabled>Préparer l'écoute</button><audio id="preview" controls></audio><button id="export" disabled>Exporter en WAV</button><small id="status">Importez un enregistrement pour commencer.</small></section><p><strong>Attention :</strong> cette première PWA propose des filtres classiques, pas encore la séparation vocale IA DeepFilterNet de la version Mac/Windows/Linux. Un bruitage et une voix ne peuvent pas être séparés individuellement ici.</p><p>Sur iPhone : Safari → Partager → Sur l'écran d'accueil. Sur Android : Chrome → Installer l'application.</p><script src="wav.js"></script><script src="dsp.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#241a33">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Chut !!!">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="../icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-512.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Chut !!! — Atelier web</title>
+</head>
+<body>
+  <header class="app-header">
+    <a class="back" href="../">← Retour au site</a>
+    <h1><img src="../brand/chut-logo.svg" alt="Chut !!!" width="330" height="76"></h1>
+    <p>Restauration locale sur téléphone et ordinateur. Aucun fichier n'est envoyé sur un serveur.</p>
+  </header>
+
+  <main>
+    <section class="panel" aria-labelledby="atelier-titre">
+      <h2 id="atelier-titre">Préparer l’écoute</h2>
+      <label class="file-field">Choisir un fichier audio
+        <input id="file" name="file" type="file" accept="audio/*">
+      </label>
+      <label class="check"><input id="notch" name="notch" type="checkbox" checked> Atténuer un ronflement constant à 50 Hz</label>
+      <label class="range" for="volume">Volume <output id="volumeValue">100 %</output>
+        <input id="volume" name="volume" type="range" min="0" max="200" value="100">
+      </label>
+      <div class="actions">
+        <button id="process" type="button" disabled>Préparer l’écoute</button>
+        <button id="export" type="button" class="secondary" disabled>Exporter en WAV</button>
+      </div>
+      <audio id="preview" controls></audio>
+      <small id="status" role="status" aria-live="polite">Importez un enregistrement pour commencer.</small>
+    </section>
+
+    <aside class="notice">
+      <strong>À savoir</strong>
+      <p>Cette première PWA propose des filtres classiques, pas encore la séparation vocale IA DeepFilterNet de la version Mac/Windows/Linux. Un bruitage et une voix ne peuvent pas être séparés individuellement ici.</p>
+    </aside>
+    <p class="install">iPhone : Safari → Partager → Sur l’écran d’accueil. Android : Chrome → Installer l’application.</p>
+  </main>
+
+  <script src="wav.js"></script>
+  <script src="dsp.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

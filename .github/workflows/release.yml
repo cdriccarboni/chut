@@ -1,6 +1,8 @@
 name: Release
 
 on:
+  pull_request:
+    branches: [main]
   push:
     tags: ['v*']
 
@@ -8,7 +10,20 @@ permissions:
   contents: write
 
 jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
   release:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Créer la pré-version si besoin

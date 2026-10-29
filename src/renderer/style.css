@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Chut Nunito';
+  src: url('../../docs/brand/Nunito-Variable.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 200 1000;
+}
+
 :root {
   --night: #1f1630;
   --velvet: #2b2040;
@@ -7,8 +14,8 @@
   --lip: #ff7a9a;
   --mint: #8fe3c5;
   --line: rgba(243, 236, 247, 0.12);
-  --display: ui-rounded, 'SF Pro Rounded', 'Nunito', 'Varela Round', system-ui, sans-serif;
-  --text: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+  --display: 'Chut Nunito', 'Nunito', ui-rounded, system-ui, sans-serif;
+  --text: 'Chut Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
   color-scheme: dark;
 }
 
@@ -27,19 +34,15 @@ body {
 }
 
 .top {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  column-gap: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   padding: 26px 40px 8px;
 }
-.logo { grid-row: span 2; border-radius: 11px; }
-h1 {
-  margin: 0;
-  font: 800 34px/1 var(--display);
-  letter-spacing: -0.01em;
-}
-.tagline { margin: 2px 0 0; color: var(--hush); }
+.brand-title { width: 220px; margin: 0; }
+.brand-title img { display: block; width: 100%; height: auto; }
+.tagline { margin: 0; color: var(--hush); }
 
 main {
   flex: 1;
