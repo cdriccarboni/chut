@@ -199,10 +199,14 @@ function draw() {
 
   // Tête de lecture
   g.globalAlpha = 1;
-  const px = (currentTime() / duration()) * w;
+  const current = currentTime();
+  const total = duration();
+  const px = (current / total) * w;
   g.fillStyle = css.getPropertyValue('--ink');
   g.fillRect(Math.round(px), 0, Math.max(1, Math.round(dpr * 1.5)), h);
-  ui.time.textContent = `${fmt(currentTime())} / ${fmt(duration())}`;
+  ui.time.textContent = `${fmt(current)} / ${fmt(total)}`;
+  ui.canvas.setAttribute('aria-valuenow', String(Math.round((current / total) * 100)));
+  ui.canvas.setAttribute('aria-valuetext', `${fmt(current)} sur ${fmt(total)}`);
 }
 
 function computePeaks() {
@@ -378,6 +382,14 @@ ui.exportBtn.addEventListener('click', exportWav);
 ui.canvas.addEventListener('click', (e) => {
   const rect = ui.canvas.getBoundingClientRect();
   seek(((e.clientX - rect.left) / rect.width) * duration());
+});
+ui.canvas.addEventListener('keydown', (e) => {
+  if (!state.original) return;
+  const step = Math.max(1, duration() / 20);
+  const next = { ArrowLeft: currentTime() - step, ArrowRight: currentTime() + step, Home: 0, End: duration() }[e.key];
+  if (next === undefined) return;
+  e.preventDefault();
+  seek(next);
 });
 
 for (const type of ['dragenter', 'dragover']) {

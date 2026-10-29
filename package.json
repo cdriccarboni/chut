@@ -1,7 +1,7 @@
 {
   "name": "chut",
   "productName": "Chut !!!",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "description": "Débruiteur audio gratuit et 100 % local (DeepFilterNet), pour Mac, Windows et Linux.",
   "main": "src/main/main.js",
   "license": "MIT",
@@ -33,6 +33,7 @@
     },
     "files": [
       "src/**/*",
+      "docs/brand/**/*",
       "package.json",
       "LICENSE"
     ],

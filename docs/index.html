@@ -12,17 +12,16 @@
   <meta property="og:url" content="https://cdriccarboni.github.io/chut/">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon-512.png">
+  <link rel="preload" href="brand/Nunito-Variable.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip" href="#telecharger">Aller au téléchargement</a>
+  <a class="skip" href="#main">Aller au contenu</a>
 
   <header class="hero">
-    <img class="hero-icon" src="icon.svg" alt="Logo Chut !!! : bruit rose avant, voix menthe après, trois points d’exclamation">
-
     <div class="hero-text">
-      <h1>Chut !!!</h1>
+      <h1 class="brand-title"><img src="brand/chut-logo.svg" alt="Chut !!!" width="660" height="152" fetchpriority="high"></h1>
       <p class="slogan">Le bruit se tait. Votre voix reste.</p>
       <p class="lede">Chut !!! enlève le souffle, le ventilo et le bruit de fond de vos enregistrements de voix. C'est gratuit, open source, et rien ne quitte votre ordinateur.</p>
       <div class="hero-cta"><a class="btn btn-main" href="app/">Ouvrir la version web installable (bêta)</a>
@@ -32,13 +31,13 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <section class="demo" aria-labelledby="demo-titre">
       <h2 id="demo-titre">Écoutez la différence</h2>
       <p class="section-lede">Une voix de synthèse noyée dans un souffle de ventilation, puis la même après Chut !!!. Basculez pendant la lecture : le son ne s'interrompt pas.</p>
 
       <div class="player" id="player" data-mode="avant">
-        <canvas class="wave" id="wave" aria-hidden="true"></canvas>
+        <canvas class="wave" id="wave" role="slider" tabindex="0" aria-label="Position de lecture" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></canvas>
         <div class="player-controls">
           <button class="play" id="play" type="button" aria-label="Lire" disabled>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
@@ -59,26 +58,26 @@
 
     <section class="get" id="telecharger" aria-labelledby="dl-titre">
       <h2 id="dl-titre">Télécharger</h2>
-      <p class="section-lede">Version <span id="version">0.1.0</span>. Votre système est mis en avant, les autres restent là.</p>
+      <p class="section-lede">Version <span id="version">2.0.0-beta.2</span>. Votre système est mis en avant, les autres restent là.</p>
 
       <div class="os-grid">
         <article class="os" data-os="mac">
           <h3>macOS</h3>
           <p>Mac Apple Silicon (M1 et suivants) ou Intel. macOS 12 ou plus récent.</p>
-          <a class="btn" data-asset="mac-arm64.dmg" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-mac-arm64.dmg">Télécharger (Apple Silicon)</a>
-          <a class="alt" data-asset="mac-x64.dmg" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-mac-x64.dmg">Version pour Mac Intel</a>
+          <a class="btn" data-asset="mac-arm64.dmg" href="https://github.com/cdriccarboni/chut/releases/download/v2.0.0-beta.2/Chut-2.0.0-beta.2-mac-arm64.dmg">Télécharger (Apple Silicon)</a>
+          <a class="alt" data-asset="mac-x64.dmg" href="https://github.com/cdriccarboni/chut/releases/download/v2.0.0-beta.2/Chut-2.0.0-beta.2-mac-x64.dmg">Version pour Mac Intel</a>
         </article>
         <article class="os" data-os="windows">
           <h3>Windows</h3>
           <p>Windows 10 ou 11, 64 bits. Installateur classique, ou version à lancer sans installer.</p>
-          <a class="btn" data-asset="win-x64-setup.exe" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-win-x64-setup.exe">Télécharger pour Windows</a>
-          <a class="alt" data-asset="win-x64-portable.exe" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-win-x64-portable.exe">Version sans installation</a>
+          <a class="btn" data-asset="win-x64-setup.exe" href="https://github.com/cdriccarboni/chut/releases/download/v2.0.0-beta.2/Chut-2.0.0-beta.2-win-x64-setup.exe">Télécharger pour Windows</a>
+          <a class="alt" data-asset="win-x64-portable.exe" href="https://github.com/cdriccarboni/chut/releases/download/v2.0.0-beta.2/Chut-2.0.0-beta.2-win-x64-portable.exe">Version sans installation</a>
         </article>
         <article class="os" data-os="linux">
           <h3>Linux</h3>
           <p>AppImage pour toutes les distributions 64 bits, paquet .deb pour Debian et Ubuntu.</p>
-          <a class="btn" data-asset="linux-x86_64.AppImage" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-linux-x86_64.AppImage">Télécharger l'AppImage</a>
-          <a class="alt" data-asset="linux-amd64.deb" href="https://github.com/cdriccarboni/chut/releases/download/v0.1.0/Chut-0.1.0-linux-amd64.deb">Paquet .deb</a>
+          <a class="btn" data-asset="linux-x86_64.AppImage" href="https://github.com/cdriccarboni/chut/releases/download/v2.0.0-beta.2/Chut-2.0.0-beta.2-linux-x86_64.AppImage">Télécharger l'AppImage</a>
+          <a class="alt" data-asset="linux-amd64.deb" href="https://github.com/cdriccarboni/chut/releases/download/v2.0.0-beta.2/Chut-2.0.0-beta.2-linux-amd64.deb">Paquet .deb</a>
         </article>
       </div>
 

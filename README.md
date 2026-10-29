@@ -1,4 +1,4 @@
-<p align="center"><img src="build/icon.png" width="128" height="128" alt="Icône de Chut !!! : des ondes avant et après suppression du bruit"></p>
+<p align="center"><img src="docs/brand/chut-logo.svg" width="420" height="97" alt="Chut !!!"></p>
 
 # Chut !!!
 

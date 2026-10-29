@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'Chut Nunito';
+  src: url('../brand/Nunito-Variable.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 200 1000;
+}
+
+:root { color-scheme: dark; --night: #241a33; --velvet: #2b2040; --ink: #f7eff8; --hush: #c2b7ca; --lip: #ef7f98; --mint: #8fe3c5; --line: rgba(247,239,248,.16); --display: 'Chut Nunito', system-ui, sans-serif; }
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { max-width: 44rem; margin: 0 auto; padding: 24px 20px 48px; background: radial-gradient(38rem 24rem at 80% -10%, #3c2a55 0%, transparent 70%), var(--night); color: var(--ink); font: 16px/1.55 var(--display); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: rgba(143,227,197,.28); }
+a { color: var(--mint); text-underline-offset: .18em; }
+:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; border-radius: 6px; }
+.app-header { padding-block: 8px 32px; }
+.back { display: inline-block; margin-bottom: 28px; font-weight: 750; }
+h1, h2, p { margin-top: 0; }
+h1 { width: min(100%, 330px); margin-bottom: 18px; }
+h1 img { display: block; width: 100%; height: auto; }
+h2 { font-size: 1.6rem; line-height: 1.1; }
+.app-header p, .install { color: var(--hush); }
+.panel { display: grid; gap: 20px; padding: clamp(20px, 5vw, 32px); border: 1px solid var(--line); border-radius: 20px; background: var(--velvet); }
+label { display: grid; gap: 8px; font-weight: 750; }
+.file-field input { width: 100%; padding: 11px; border: 1px dashed var(--line); border-radius: 10px; color: var(--hush); }
+.check { grid-template-columns: auto 1fr; align-items: start; font-weight: 600; }
+.check input { width: 1.15rem; height: 1.15rem; margin-top: .2rem; accent-color: var(--mint); }
+.range { grid-template-columns: 1fr auto; }
+.range input { grid-column: 1 / -1; width: 100%; accent-color: var(--mint); }
+output { color: var(--mint); font-variant-numeric: tabular-nums; }
+.actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+button { min-height: 48px; padding: 12px 16px; border: 0; border-radius: 999px; background: var(--lip); color: #2c1020; font: 800 1rem/1.2 var(--display); cursor: pointer; }
+button, a { touch-action: manipulation; }
+button.secondary { border: 1px solid var(--line); background: transparent; color: var(--ink); }
+button:disabled { opacity: .42; cursor: not-allowed; }
+audio { width: 100%; }
+small { color: var(--hush); }
+.notice { margin-top: 24px; padding: 20px; border-left: 3px solid var(--lip); background: rgba(58,42,82,.45); }
+.notice p { margin: 8px 0 0; color: var(--hush); }
+.install { margin: 24px 0 0; font-size: .9375rem; }
+@media (max-width: 28rem) { body { padding-inline: 16px; } .actions { grid-template-columns: 1fr; } }

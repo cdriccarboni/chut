@@ -135,6 +135,11 @@
     return '−' + Math.abs(Math.round(db)) + ' dB';
   }
 
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    return mins + ':' + String(Math.floor(seconds % 60)).padStart(2, '0');
+  }
+
   function updateMeter() {
     if (!floors) return;
     meter.textContent =
@@ -238,14 +243,32 @@
     setMode('apres');
   });
 
-  canvas.addEventListener('click', function (e) {
+  function seekTo(seconds) {
     if (!buffers) return;
-    const rect = canvas.getBoundingClientRect();
     const wasPlaying = playing;
     if (playing) stop();
-    offset = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * duration();
+    offset = Math.max(0, Math.min(duration(), seconds));
     if (wasPlaying) start();
     draw();
+  }
+
+  canvas.addEventListener('click', function (e) {
+    const rect = canvas.getBoundingClientRect();
+    seekTo(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * duration());
+  });
+
+  canvas.addEventListener('keydown', function (e) {
+    if (!buffers) return;
+    const step = Math.max(1, duration() / 20);
+    const next = {
+      ArrowLeft: position() - step,
+      ArrowRight: position() + step,
+      Home: 0,
+      End: duration(),
+    }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    seekTo(next);
   });
 
   /* Forme d'onde : les barres du bruit s'affaissent quand on passe à « Avec Chut !!! ». */
@@ -292,6 +315,9 @@
     let top = 0;
     for (let i = 0; i < columns; i++) top = Math.max(top, peaks.avant[i], peaks.apres[i]);
     const played = (position() / duration()) * columns;
+    const percent = Math.round((position() / duration()) * 100);
+    canvas.setAttribute('aria-valuenow', String(percent));
+    canvas.setAttribute('aria-valuetext', formatTime(position()) + ' sur ' + formatTime(duration()));
     const mid = h / 2;
     const done = mix > 0.5 ? '#8fe3c5' : '#ff7a9a';
     for (let i = 0; i < columns; i++) {

@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 // À partir de build/icon.png (1024) : build/icon.icns (macOS, via sips + iconutil) et build/icon.ico.
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, readdirSync, rmSync, rmdirSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdtempSync, readFileSync, readdirSync, rmSync, rmdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = join(root, 'build', 'icon.png');
+const sourceSvg = join(root, 'build', 'icon.svg');
 if (process.platform !== 'darwin') {
   console.error('make-icons nécessite macOS (sips, iconutil).');
   process.exit(1);
@@ -48,6 +49,11 @@ sizes.forEach((s, i) => {
   offset += pngs[i].length;
 });
 writeFileSync(join(root, 'build', 'icon.ico'), Buffer.concat([header, ...pngs]));
+
+// L'icône PWA et le favicon restent issus de la même source vectorielle.
+copyFileSync(sourceSvg, join(root, 'docs', 'icon.svg'));
+resize(512, join(root, 'docs', 'icon-512.png'));
+resize(512, join(root, 'docs', 'app', 'icon-512.png'));
 
 // nettoyage du dossier temporaire (fichiers puis dossiers, sans suppression récursive)
 for (const f of readdirSync(set)) rmSync(join(set, f));
