@@ -7,3 +7,5 @@ engines/*/
 .DS_Store
 .env
 .env.*
+*.jks
+*.keystore
